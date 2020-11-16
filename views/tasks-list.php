@@ -77,15 +77,27 @@ input#searchInput{
   var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("tasks").innerHTML = this.responseText;
-      } else {
+         try {
+           var obj = JSON.parse(xmlhttp.responseText);
+           
+           console.log(obj);
+           console.log(obj[0]);
+           console.log(obj[1]);
+
+           document.getElementById("message").innerHTML = obj[0];
+           document.getElementById("tasks").innerHTML = obj[1];
+
+       } catch (error) {
+           throw Error;
+       }/* else {
        document.getElementById("tasks").innerHTML = "The request is being processed............";
-      }
+      }*/
        if(sortOrder == "asc"){
      $("#sort").val("desc");
    }else{
      $("#sort").val("asc");
    }
+  }
     };
     xmlhttp.open("GET", "/phpprojects/tasks_registration_app/index.php?action=sortColumn&column="+column +"&sortOrder="+sortOrder, true);
     xmlhttp.send();
@@ -112,6 +124,7 @@ input#searchInput{
      <label>описание задачи</label>
      <textarea name="taskDescription" id="taskDescription" rows="10" cols="43" placeholder="Please, describe the new product." required><?php if(isset($taskDescription)) {echo "$taskDescription";} ?></textarea>
      <button class="submitBtn" name="submit" type="submit" value="Register" onclick="getTasks()">Register</button>
+     <p id="message"></p>
      <!-- Add the action name - value pair 
      <input type="hidden" name="action" value="Register">
     </fieldset>
@@ -119,17 +132,19 @@ input#searchInput{
 
    </form>-->
    
-   <p id="bottomline"><?php echo $message; ?></p>
+   
    </div>
     </div>
    
   </main>
   
+  <div id="dataArea">
   <input type="text" id="searchInput" onkeyup="searchTasks()" placeholder="Search for person or task names.." title="Type in a name">
    <input type="hidden" id="sort" value="asc"><table>
    <thead>
-   <tr><th>ФИО исполнителя</th><th>название задачи</th><th id='sortTaskStartDate'>дата создания задачи</th><th  id='sortTaskFinishDate'>дата завершения задачи</th><th>описание задачи</th><th>          </th></tr>
+   <tr><th>ФИО исполнителя</th><th>название задачи</th><th id='sortTaskStartDate'>дата создания задачи</th><th  id='sortTaskFinishDate'>дата завершения задачи</th><th>описание задачи</th><th></th></tr>
    </thead></table><div id="tasks"><?php   echo $tasksTable;  ?></div>
+   </div>
   
   <script>
    
@@ -137,7 +152,7 @@ input#searchInput{
   function getTasks() {
    
  var action = "register";
- var doerName = document.getElementById("searchInput").value;
+ var doerName = document.getElementById("doerName").value;
  var eMail = document.getElementById("eMail").value;
  var taskFinishDate = document.getElementById("datepicker").value;
  var taskName = document.getElementById("taskName").value;
@@ -152,10 +167,27 @@ input#searchInput{
    var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("tasks").innerHTML = this.responseText;
-      } else {
-       document.getElementById("tasks").innerHTML = "The request is being processed............";
-      }
+       //console.log(this.responseText);
+       //document.getElementById("tasks").innerHTML = this.responseText;
+       
+       try {
+           var obj = JSON.parse(xmlhttp.responseText);
+           
+           console.log(obj);
+           console.log(obj[0]);
+           console.log(obj[1]);
+
+           document.getElementById("message").innerHTML = obj[0];
+           document.getElementById("tasks").innerHTML = obj[1];
+
+       } catch (error) {
+           throw Error;
+       }
+       
+              
+      } /*else {
+       document.getElementById("dataArea").innerHTML = "The request is being processed............";
+      }*/
     };
     xmlhttp.open("GET", "/phpprojects/tasks_registration_app/index.php?action="+action +"&doerName="+doerName+"&eMail="+eMail+"&taskFinishDate="+taskFinishDate+"&taskName="+taskName+"&taskDescription="+taskDescription, true);
     xmlhttp.send();
@@ -170,9 +202,21 @@ input#searchInput{
    var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("tasks").innerHTML = this.responseText;
-      } else {
+         try {
+           var obj = JSON.parse(xmlhttp.responseText);
+           
+           console.log(obj);
+           console.log(obj[0]);
+           console.log(obj[1]);
+
+           document.getElementById("message").innerHTML = obj[0];
+           document.getElementById("tasks").innerHTML = obj[1];
+
+       } catch (error) {
+           throw Error;
+       } /*else {
        document.getElementById("tasks").innerHTML = "The request is being processed............";
+      }*/
       }
     };
     xmlhttp.open("GET", "/phpprojects/tasks_registration_app/index.php?action="+action +"&taskId="+taskId, true);
@@ -192,10 +236,22 @@ input#searchInput{
    var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("tasks").innerHTML = this.responseText;
-      } else {
+        try {
+           var obj = JSON.parse(xmlhttp.responseText);
+           
+           console.log(obj);
+           console.log(obj[0]);
+           console.log(obj[1]);
+
+           document.getElementById("message").innerHTML = obj[0];
+           document.getElementById("tasks").innerHTML = obj[1];
+
+       } catch (error) {
+           throw Error;
+       }/* else {
        document.getElementById("tasks").innerHTML = "The request is being processed............";
-      }
+      }*/
+  }
     };
     xmlhttp.open("GET", "/phpprojects/tasks_registration_app/index.php?action="+action +"&searchValue="+searchValue, true);
     xmlhttp.send();

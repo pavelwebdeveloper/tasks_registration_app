@@ -27,7 +27,7 @@ require_once 'library/functions.php';
   $action = filter_input(INPUT_GET, 'action');
  }
  
-  $message = "";
+  
  switch ($action){
   
   case 'sortColumn':
@@ -37,8 +37,14 @@ require_once 'library/functions.php';
    
    $tasks = sortColumn($column, $sortOrder);
    $tasksTable = buildTaskTable($tasks);
-         
-   echo $tasksTable;
+       
+   $message = "";
+   
+   $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
+   
+   echo $result;
          
     exit;
     
@@ -49,8 +55,14 @@ require_once 'library/functions.php';
      
      $tasks = searchTasks($searchValue);
    $tasksTable = buildTaskTable($tasks);
+   
+   $message = "";
          
-   echo $tasksTable;
+   $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
+   
+   echo $result;
          
     exit;
     
@@ -59,16 +71,33 @@ require_once 'library/functions.php';
    //echo var_dump($_GET);
    
    
+  
    // Filter and store the data
    /*
    $doerName = filter_input(INPUT_POST, 'doerName', FILTER_SANITIZE_STRING);
    $taskName = filter_input(INPUT_POST, 'taskName', FILTER_SANITIZE_STRING);
    $taskDescription = filter_input(INPUT_POST, 'taskDescription', FILTER_SANITIZE_STRING);
+   if(strlen($taskDescription)>10){
+    $message = '<p>Описание задачи не должно содержать более 1000 символов.</p>';
+    $tasks = getAllTasks();  
+   
+    $tasksTable = buildTaskTable($tasks);
+    
+    $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
+   
+   echo $result;
+    
+    
+    exit;
+   }
    $taskStartDate = date("d.m.Y");
    $taskFinishDate = filter_input(INPUT_POST, 'datepicker', FILTER_SANITIZE_STRING);
+   $taskFinishDate = str_replace("/", ".", $taskFinishDate);
    $eMail = filter_input(INPUT_POST, 'eMail', FILTER_SANITIZE_EMAIL);
-   */
-   /*
+   
+   
    echo var_dump($doerName);
    echo var_dump($taskName);
    echo var_dump($taskDescription);
@@ -76,56 +105,77 @@ require_once 'library/functions.php';
    echo var_dump($taskFinishDate);
    echo var_dump($eMail);
    
-   echo var_dump($_POST['taskFinishDate']);
-   echo var_dump($_POST['eMail']);
-    * *
+   echo var_dump($taskFinishDate);
+   echo var_dump($eMail);
     */
-   /*
-  
-    * /
-    */
+   
    // Filter and store the data
+   
    $doerName =$_GET['doerName'];
    $taskName = $_GET['taskName'];
    $taskDescription = $_GET['taskDescription'];
    if(strlen($taskDescription)>1000){
     $message = '<p>Описание задачи не должно содержать более 1000 символов.</p>';
-    $tasks = getAllTasks();
+    $tasks = getAllTasks();  
    
+    $tasksTable = buildTaskTable($tasks);
+    
+    $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
    
-    $tasksTable = $message . "<br>" . "<br>" . buildTaskTable($tasks);
-   
-   echo $tasksTable;
+   echo $result;
+    
+    
     exit;
    }
    $taskStartDate = date("d.m.Y");
    $taskFinishDate = $_GET['taskFinishDate'];
    $taskFinishDate = str_replace("/", ".", $taskFinishDate);
    $eMail = $_GET['eMail'];
-    
    
+  
   // Check for missing data
    if(empty($doerName) || empty($taskName) || empty($taskDescription) || empty($taskFinishDate) || empty($eMail)){
     $message = '<p>Please, provide information correctly for all form fields.</p>';
     $tasks = getAllTasks();
    
    
-    $tasksTable = $message . "<br>" . "<br>" . buildTaskTable($tasks);
+    $tasksTable = buildTaskTable($tasks);
    
-   echo $tasksTable;
+   $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
+   
+   echo $result;
+   
     exit;
    }
    
    // Send the data to the model
    $regOutcome = addTask($doerName, $taskName, $taskDescription, $taskStartDate, $taskFinishDate, $eMail);
    
-   $message = "";
+   
+   $subject = 'task registered';
+  $message = "You have successfully added a task for ".$doerName;
+  //$headers = 'From: noreply @ company . com';
+  mail($eMail,$subject,$message);
+    
+   
+   
+   $message = "Success !! You have successfully added a task for ".$doerName;
    $tasks = getAllTasks();
    
    
     $tasksTable = buildTaskTable($tasks);
+    
+    $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
    
-   echo $tasksTable;
+   echo $result;
+    
+   
       
     exit;
    
@@ -193,13 +243,17 @@ require_once 'library/functions.php';
      
      $deleteOutcome = deleteTask($taskId);
      
-     $message = "";
+     $message = "Success !! You have successfully deleted the task";
    $tasks = getAllTasks();
    
    
     $tasksTable = buildTaskTable($tasks);
+   $resultArray = array($message, $tasksTable);
+    
+    $result = json_encode($resultArray);
    
-   echo $tasksTable;
+   echo $result;
+    
       
     exit;
    
