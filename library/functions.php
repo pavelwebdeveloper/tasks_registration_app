@@ -41,7 +41,9 @@ function formingOutput($message, $tasksTable){
 function checkDoerName($doerName) {
  $pattern = '/^[A-Za-z\x{0400}-\x{04FF}\s]{3,}$/';
  $pattern = "/[A-Za-z\p{L}][^0-9]+$/u";
- $pattern = "/[^0-9]+$/u";
+ $pattern = '/[A-Za-z\p{Cyrillic}]$/u';
+ $pattern = '/^[^0-9~!@#$%^&*()_+{}|:"<>?`=\-\[\];,\/№]+$/';
  return preg_match($pattern, $doerName);
+ 
 }
 

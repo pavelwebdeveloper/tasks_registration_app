@@ -26,7 +26,7 @@
         }
 
         input#searchInput{
-         width: 300px;
+         width: 350px;
         }
   </style>
   <script>
@@ -52,7 +52,8 @@
     
            function sortColumn(column){
 
-              var sortOrder = $("#sort").val();
+              var order = $("#order").val();              
+              
               var xmlhttp = new XMLHttpRequest();
 
               xmlhttp.onreadystatechange = function() {
@@ -67,14 +68,14 @@
                   throw Error;
               }
 
-              if(sortOrder == "asc"){
-                 $("#sort").val("desc");
+              if(order == "asc"){
+                 $("#order").val("desc");
              }else{
-                 $("#sort").val("asc");
+                 $("#order").val("asc");
                   }
                 }
               };
-                xmlhttp.open("GET", "/phpprojects/tasks_registration_app/index.php?action=sortColumn&column="+column +"&sortOrder="+sortOrder, true);
+                xmlhttp.open("GET", "/phpprojects/tasks_registration_app/index.php?action=sortColumn&column="+column +"&sortOrder="+order, true);
                 xmlhttp.send();
                  }
    
@@ -106,8 +107,8 @@
    </main>
   
      <div id="dataArea">
-     <input type="text" id="searchInput" onkeyup="searchTasks()" placeholder="Search for person or task names.." title="Type in a name">
-      <input type="hidden" id="sort" value="asc"><table>
+     <input type="text" id="searchInput" onkeyup="searchTasks()" placeholder="Искать по ФИО исполнителя или названию задачи.." title="Введите ФИО человека или имя задачи">
+      <input type="hidden" id="order" value="asc"><table>
       <thead>
       <tr><th>ФИО исполнителя</th><th>название задачи</th><th id='sortTaskStartDate'>дата создания задачи</th><th  id='sortTaskFinishDate'>дата завершения задачи</th><th>описание задачи</th><th></th></tr>
       </thead></table><div id="tasks"><?php   echo $tasksTable;  ?></div>

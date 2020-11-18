@@ -50,8 +50,8 @@ require_once 'library/connections.php';
           // Get the input values and check the input
           $doerName =$_GET['doerName'];
           $doerNameCheckResult = checkDoerName($_GET['doerName']);
-          if($doerNameCheckResult){
-           $doerName =$_GET['doerName'];           
+          if($doerNameCheckResult == 1){
+           $doerName =$_GET['doerName'];  
           } else {
            $message = '<p>Неправильный формат имени.</p>';
            $tasks = getAllTasks();  
