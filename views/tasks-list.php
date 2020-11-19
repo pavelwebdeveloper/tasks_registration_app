@@ -28,6 +28,9 @@
         input#searchInput{
          width: 350px;
         }
+        input{
+         width: 350px;
+        }
   </style>
   <script>
          $(function() {
@@ -89,17 +92,18 @@
       
    
          <p id="rp">Все поля обязательны.</p>
-         <label for="doerName">ФИО исполнителя</label>
-         <input type="text" name="doerName" id="doerName" pattern="[A-Za-z]{2,}" <?php if(isset($doerName)){echo "value='$doerName'";} ?>  required>
-         <label for="eMail">E-mail</label>
-         <input type="eMail" name="eMail" id="eMail" placeholder="someone@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.]+\.[a-z]{2,}$" <?php if(isset($eMail)){echo "value='$eMail'";} ?> required>
-         <p><label for="datepicker">дата завершения задачи:</label> <input type="text" name="datepicker" id="datepicker"></p>
-         <label for="taskName">название задачи</label>
-         <input type="text" name="taskName" id="taskName" pattern="[A-Za-z]{2,}" <?php if(isset($taskName)){echo "value='$taskName'";} ?>  required>
-         <label>описание задачи</label>
-         <textarea name="taskDescription" id="taskDescription" rows="10" cols="43" placeholder="Пожалуйста, опишите новую задачу" required><?php if(isset($taskDescription)) {echo "$taskDescription";} ?></textarea>
-         <button class="submitBtn" name="submit" type="submit" value="Register" onclick="getTasks()">Register</button>
+         <label for="doerName">ФИО исполнителя</label><br>
+         <input type="text" name="doerName" id="doerName" pattern="[A-Za-z]{2,}" <?php if(isset($doerName)){echo "value='$doerName'";} ?>  required><br><br>
+         <label for="eMail">E-mail</label><br>
+         <input type="eMail" name="eMail" id="eMail" placeholder="someone@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.]+\.[a-z]{2,}$" <?php if(isset($eMail)){echo "value='$eMail'";} ?> required><br><br>
+         <label for="datepicker">дата завершения задачи:</label><br> <input type="text" name="datepicker" id="datepicker"><br><br>
+         <label for="taskName">название задачи</label><br>
+         <input type="text" name="taskName" id="taskName" pattern="[A-Za-z]{2,}" <?php if(isset($taskName)){echo "value='$taskName'";} ?>  required><br><br>
+         <label>описание задачи</label><br>
+         <textarea name="taskDescription" id="taskDescription" rows="10" cols="43" placeholder="Пожалуйста, опишите новую задачу" required><?php if(isset($taskDescription)) {echo "$taskDescription";} ?></textarea><br><br>
+         <button class="submitBtn" name="submit" type="submit" value="Register" onclick="getTasks()">Зарегистрировать задачу</button><br><br>
          <p id="message"></p>
+         
         
      </div>
      </div>

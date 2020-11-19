@@ -15,7 +15,7 @@ function buildTaskTable($tasks){
          $tasksTable .= "<td>$task[taskStartDate]</td>";
          $tasksTable .= "<td>$task[taskFinishDate]</td>";
          $tasksTable .= "<td>$task[taskDescription]</td>";
-         $tasksTable .= "<td><a class='tablelink' onclick='deleteTask($task[taskId])'>Delete</a></td></tr>";
+         $tasksTable .= "<td><a class='tablelink' onclick='deleteTask($task[taskId])'>Удалить задачу</a></td></tr>";
         }
         $tasksTable .= "</tbody></table>";
         return $tasksTable;
@@ -38,12 +38,9 @@ function formingOutput($message, $tasksTable){
         exit;
 }
 
+// the function to check the name
 function checkDoerName($doerName) {
- $pattern = '/^[A-Za-z\x{0400}-\x{04FF}\s]{3,}$/';
- $pattern = "/[A-Za-z\p{L}][^0-9]+$/u";
- $pattern = '/[A-Za-z\p{Cyrillic}]$/u';
  $pattern = '/^[^0-9~!@#$%^&*()_+{}|:"<>?`=\-\[\];,\/№]+$/';
- return preg_match($pattern, $doerName);
- 
+ return preg_match($pattern, $doerName); 
 }
 
